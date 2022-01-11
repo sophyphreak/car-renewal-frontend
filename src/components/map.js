@@ -24,7 +24,9 @@ const Map = ({ houstonPosition }) => {
   }
 
   React.useEffect(() => {
-    fetch("http://165.22.47.42:3583/api/v1/renewal-locations")
+    fetch(
+      "https://car-renewal.andrew-horn-portfolio.life/api/v1/renewal-locations"
+    )
       .then(res => res.json())
       .then(data => setLocations(data))
       .catch(err => console.error(err))
