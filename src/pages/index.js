@@ -4,6 +4,7 @@ import { MapContainer } from "react-leaflet"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
 import Map from "../components/map"
+import Contact from "../components/contact"
 
 const IndexPage = () => {
   const houstonPosition = [29.7604, -95.3698]
@@ -59,6 +60,7 @@ const IndexPage = () => {
           </a>
         </p>
       </blockquote>
+      <Contact />
     </Layout>
   )
 }

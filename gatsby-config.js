@@ -69,5 +69,6 @@ module.exports = {
         },
       },
     },
+    `@chakra-ui/gatsby-plugin`,
   ],
 }
