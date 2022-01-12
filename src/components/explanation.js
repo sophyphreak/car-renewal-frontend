@@ -29,7 +29,7 @@ const Explanation = () => (
       p={5}
       bg="#f8efff"
       as="blockquote"
-      borderLeft="10px solid rebeccapurple"
+      borderLeft="10px solid #c1a0e2"
       _before={{
         color: "#ccc",
         content: "open-quote",
