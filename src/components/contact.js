@@ -7,13 +7,16 @@ import {
   Input,
   Textarea,
   Button,
+  Stack,
+  Box,
+  Heading,
 } from "@chakra-ui/react"
 import { useForm } from "react-hook-form"
 
 const emailRegex =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
-const Asterisk = () => <span style={{ color: "red" }}>*</span>
+const Asterisk = () => <span css={{ color: "red" }}>*</span>
 
 const Contact = () => {
   const {
@@ -21,6 +24,7 @@ const Contact = () => {
     handleSubmit,
     formState: { errors },
     reset,
+    isLoading,
   } = useForm()
   const onSubmit = data => {
     fetch("/", {
@@ -33,16 +37,20 @@ const Contact = () => {
     reset()
   }
   return (
-    <form
+    <Box
+      as="form"
       name="contact"
       onSubmit={handleSubmit(onSubmit)}
       data-netlify="true"
       data-netlify-honeypot="bot-field"
-      style={{ border: "solid", padding: "1rem", borderRadius: "1rem" }}
+      border="solid"
+      p="1rem"
+      borderRadius="1rem"
+      m={10}
     >
-      <h3>Contact us</h3>
-      <input type="hidden" name="form-name" value="contact" />
-      <p>
+      <Stack spacing={5}>
+        <Heading as="h3">Contact us</Heading>
+        <input type="hidden" name="form-name" value="contact" />
         <FormControl isInvalid={errors.name}>
           <FormLabel htmlFor="name">
             Name: <Asterisk />
@@ -55,8 +63,6 @@ const Contact = () => {
             <FormErrorMessage>Name is required.</FormErrorMessage>
           )}
         </FormControl>
-      </p>
-      <p>
         <FormControl isInvalid={errors.email}>
           <FormLabel htmlFor="email">
             Email: <Asterisk />
@@ -77,8 +83,6 @@ const Contact = () => {
             <FormErrorMessage>Must be a valid email.</FormErrorMessage>
           )}
         </FormControl>
-      </p>
-      <p>
         <FormControl isInvalid={errors.message}>
           <FormLabel htmlFor="message">
             Message: <Asterisk />
@@ -107,13 +111,18 @@ const Contact = () => {
             </FormErrorMessage>
           )}
         </FormControl>
-      </p>
-      <p>
-        <Button type="submit" colorScheme="blue">
-          Send
-        </Button>
-      </p>
-    </form>
+        <Box>
+          <Button
+            isLoading={isLoading}
+            loadingText="Submitting"
+            type="submit"
+            colorScheme="teal"
+          >
+            Send
+          </Button>
+        </Box>
+      </Stack>
+    </Box>
   )
 }
 
