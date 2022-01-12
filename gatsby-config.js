@@ -68,5 +68,6 @@ module.exports = {
       },
     },
     `@chakra-ui/gatsby-plugin`,
+    `gatsby-plugin-emotion`,
   ],
 }

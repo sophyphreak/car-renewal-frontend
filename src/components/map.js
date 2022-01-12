@@ -1,5 +1,7 @@
 import * as React from "react"
 import { TileLayer, Marker, Popup, useMap } from "react-leaflet"
+import { Box, Button } from "@chakra-ui/react"
+import { ExternalLinkIcon } from "@chakra-ui/icons"
 
 const Map = ({ houstonPosition }) => {
   const [userLocation, setUserLocation] = React.useState([])
@@ -45,29 +47,32 @@ const Map = ({ houstonPosition }) => {
             key={`${store} ${address} ${city} ${zip} ${telephone} ${latitude} ${longitude}`}
           >
             <Popup>
-              <div>{store}</div>
-              <div>{address}</div>
-              <div>
+              <Box fontWeight="semibold" mb={1}>
+                {store}
+              </Box>
+              <Box>{address}</Box>
+              <Box>
                 {city} {zip}
-              </div>
-              <div>{telephone}</div>
-              <div>
-                <a
-                  href="#"
-                  onClick={() =>
-                    sendUserToDirections({
-                      address,
-                      city,
-                      zip,
-                      latitude,
-                      longitude,
-                      userLocation,
-                    })
-                  }
-                >
-                  Get Directions
-                </a>
-              </div>
+              </Box>
+              <Box>{telephone}</Box>
+              <Button
+                variant="link"
+                size="sm"
+                color="teal.500"
+                mt={1}
+                onClick={() =>
+                  sendUserToDirections({
+                    address,
+                    city,
+                    zip,
+                    latitude,
+                    longitude,
+                    userLocation,
+                  })
+                }
+              >
+                Get Directions <ExternalLinkIcon />
+              </Button>
             </Popup>
           </Marker>
         )
