@@ -4068,6 +4068,11 @@ dot-prop@^5.2.0:
   dependencies:
     is-obj "^2.0.0"
 
+dotenv@^16.0.0:
+  version "16.0.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.0.0.tgz#c619001253be89ebb638d027b609c75c26e47411"
+  integrity sha512-qD9WU0MPM4SWLPJy/r2Be+2WgQj8plChsyrCNQzW/0WjvcJQiKQJ9mH3ZgB3fxbUUxgc/11ZJ0Fi5KiimWGz2Q==
+
 dotenv@^8.2.0, dotenv@^8.6.0:
   version "8.6.0"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-8.6.0.tgz#061af664d19f7f4d8fc6e4ff9b584ce237adcb8b"
@@ -5143,6 +5148,14 @@ gatsby-plugin-gatsby-cloud@^4.4.0:
     kebab-hash "^0.1.2"
     lodash "^4.17.21"
     webpack-assets-manifest "^5.0.6"
+
+gatsby-plugin-google-gtag@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-google-gtag/-/gatsby-plugin-google-gtag-4.5.0.tgz#968cb2465011ff0e560aa229cfe44479c6c3a55e"
+  integrity sha512-6QtWwXZm1hTTrVhUg31tBZtBMlVvGrfBJ+FRSDU0vcq4P+idr44/VsI4dKrnvDyQy4AYSSL2+9rOAplU8QeTTg==
+  dependencies:
+    "@babel/runtime" "^7.15.4"
+    minimatch "^3.0.4"
 
 gatsby-plugin-image@^2.4.0:
   version "2.4.0"
