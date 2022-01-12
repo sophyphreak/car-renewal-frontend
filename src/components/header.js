@@ -2,14 +2,7 @@ import * as React from "react"
 import PropTypes from "prop-types"
 import { Link } from "gatsby"
 
-import {
-  Box,
-  Text,
-  Stack,
-  UnorderedList,
-  ListItem,
-  Heading,
-} from "@chakra-ui/react"
+import { Heading } from "@chakra-ui/react"
 
 const Header = ({ siteTitle }) => (
   <header
