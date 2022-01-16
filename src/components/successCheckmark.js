@@ -8,14 +8,12 @@ import {
 
 const SuccessCheckmark = ({ isOpen }) => {
   return (
-    <>
-      <AlertDialog motionPreset="slideInBottom" isOpen={isOpen} isCentered>
-        <AlertDialogOverlay />
-        <AlertDialogContent width="6rem" height="6rem" borderRadius="50%">
-          <Checkmark size="xxLarge" />
-        </AlertDialogContent>
-      </AlertDialog>
-    </>
+    <AlertDialog motionPreset="slideInBottom" isOpen={isOpen} isCentered>
+      <AlertDialogOverlay />
+      <AlertDialogContent width="6rem" height="6rem" borderRadius="50%">
+        <Checkmark size="xxLarge" />
+      </AlertDialogContent>
+    </AlertDialog>
   )
 }
 

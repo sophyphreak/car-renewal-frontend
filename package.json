@@ -34,7 +34,14 @@
     "react-leaflet": "^3.2.3"
   },
   "devDependencies": {
-    "prettier": "^2.5.1"
+    "@typescript-eslint/eslint-plugin": "^5.9.1",
+    "@typescript-eslint/parser": "^5.9.1",
+    "eslint-config-kentcdodds": "^20.0.1",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.28.0",
+    "jest": "^27.4.7",
+    "prettier": "^2.5.1",
+    "typescript": "^4.5.4"
   },
   "scripts": {
     "build": "gatsby build",
@@ -43,7 +50,8 @@
     "start": "gatsby develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
+    "lint": "eslint --cache --cache-location ./node_modules/.cache/.eslintcache --ext js,jsx,ts,tsx ."
   },
   "repository": {
     "type": "git",

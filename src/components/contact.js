@@ -21,6 +21,14 @@ const emailRegex =
 
 const Asterisk = () => <span css={{ color: "red" }}>*</span>
 
+const encode = data => {
+  return Object.keys(data)
+    .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
+    .join("&")
+}
+
+const timeout = ms => new Promise(resolve => setTimeout(resolve, ms))
+
 const Contact = () => {
   const {
     register,
@@ -85,7 +93,9 @@ const Contact = () => {
               })}
             />
             {!errors.email && (
-              <FormHelperText>We'll never share your email.</FormHelperText>
+              <FormHelperText>
+                We&apos;ll never share your email.
+              </FormHelperText>
             )}
             {errors.email?.type === "required" && (
               <FormErrorMessage>Email is required.</FormErrorMessage>
@@ -137,13 +147,5 @@ const Contact = () => {
     </>
   )
 }
-
-const encode = data => {
-  return Object.keys(data)
-    .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
-    .join("&")
-}
-
-const timeout = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 export default Contact

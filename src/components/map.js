@@ -3,6 +3,58 @@ import { TileLayer, Marker, Popup, useMap } from "react-leaflet"
 import { Box, Button } from "@chakra-ui/react"
 import { ExternalLinkIcon } from "@chakra-ui/icons"
 
+const generateGooglePlaceUrl = ({ address, city, zip, latitude, longitude }) =>
+  `https://www.google.com/maps/place/${encodeURIComponent(
+    `${address}, ${city} ${zip}`
+  )}/@${latitude},${longitude}`
+
+const generateGoogleDirectionsUrl = ({
+  address,
+  city,
+  zip,
+  latitude,
+  longitude,
+  userLocation: [userLatitude, userLongitude],
+}) =>
+  `https://www.google.com/maps/dir/${userLatitude},${userLongitude}/${encodeURIComponent(
+    `${address}, ${city} ${zip}`
+  )}/@${latitude},${longitude}`
+
+const sendUserToDirections = ({ userLocation, ...args }) => {
+  let targetUrl
+  if (userLocation.length) {
+    targetUrl = generateGoogleDirectionsUrl({
+      userLocation,
+      ...args,
+    })
+  } else {
+    targetUrl = generateGooglePlaceUrl({
+      ...args,
+    })
+  }
+  window.open(targetUrl, "_blank")
+}
+
+const userOutsideHoustonArea = ({
+  userLatitude,
+  userLongitude,
+  houstonPosition: [houstonLatitude, houstonLongitude],
+}) => {
+  if (userLatitude > houstonLatitude + 0.5) {
+    return true
+  }
+  if (userLatitude < houstonLatitude - 0.5) {
+    return true
+  }
+  if (userLongitude > houstonLongitude + 0.5) {
+    return true
+  }
+  if (userLongitude < houstonLongitude - 0.5) {
+    return true
+  }
+  return false
+}
+
 const Map = ({ houstonPosition }) => {
   const [userLocation, setUserLocation] = React.useState([])
   const [locations, setLocations] = React.useState([])
@@ -33,6 +85,8 @@ const Map = ({ houstonPosition }) => {
       .then(data => setLocations(data))
       .catch(err => console.error(err))
     navigator.geolocation.getCurrentPosition(success)
+    // silenced because adding `success` causes infinite re-renders
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
     <>
@@ -79,58 +133,6 @@ const Map = ({ houstonPosition }) => {
       )}
     </>
   )
-}
-
-const sendUserToDirections = ({ userLocation, ...args }) => {
-  let targetUrl
-  if (userLocation.length) {
-    targetUrl = generateGoogleDirectionsUrl({
-      userLocation,
-      ...args,
-    })
-  } else {
-    targetUrl = generateGooglePlaceUrl({
-      ...args,
-    })
-  }
-  window.open(targetUrl, "_blank")
-}
-
-const generateGooglePlaceUrl = ({ address, city, zip, latitude, longitude }) =>
-  `https://www.google.com/maps/place/${encodeURIComponent(
-    `${address}, ${city} ${zip}`
-  )}/@${latitude},${longitude}`
-
-const generateGoogleDirectionsUrl = ({
-  address,
-  city,
-  zip,
-  latitude,
-  longitude,
-  userLocation: [userLatitude, userLongitude],
-}) =>
-  `https://www.google.com/maps/dir/${userLatitude},${userLongitude}/${encodeURIComponent(
-    `${address}, ${city} ${zip}`
-  )}/@${latitude},${longitude}`
-
-const userOutsideHoustonArea = ({
-  userLatitude,
-  userLongitude,
-  houstonPosition: [houstonLatitude, houstonLongitude],
-}) => {
-  if (userLatitude > houstonLatitude + 0.5) {
-    return true
-  }
-  if (userLatitude < houstonLatitude - 0.5) {
-    return true
-  }
-  if (userLongitude > houstonLongitude + 0.5) {
-    return true
-  }
-  if (userLongitude < houstonLongitude - 0.5) {
-    return true
-  }
-  return false
 }
 
 export default Map
