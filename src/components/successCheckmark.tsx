@@ -6,9 +6,19 @@ import {
   AlertDialogOverlay,
 } from "@chakra-ui/react"
 
-const SuccessCheckmark = ({ isOpen }) => {
+interface SuccessCheckmarkProps {
+  isOpen: boolean
+}
+
+const SuccessCheckmark = ({ isOpen }: SuccessCheckmarkProps) => {
   return (
-    <AlertDialog motionPreset="slideInBottom" isOpen={isOpen} isCentered>
+    <AlertDialog
+      motionPreset="slideInBottom"
+      isOpen={isOpen}
+      isCentered
+      leastDestructiveRef={undefined}
+      onClose={() => {}}
+    >
       <AlertDialogOverlay />
       <AlertDialogContent width="6rem" height="6rem" borderRadius="50%">
         <Checkmark size="xxLarge" />

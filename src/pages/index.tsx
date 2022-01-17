@@ -8,8 +8,8 @@ import Map from "../components/map"
 import Explanation from "../components/explanation"
 import Contact from "../components/contact"
 
-const IndexPage = () => {
-  const houstonPosition = [29.7604, -95.3698]
+const IndexPage: React.FC = () => {
+  const houstonPosition: [number, number] = [29.7604, -95.3698]
   return (
     <Layout>
       <Seo title="Home" />

@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react"
 import { ExternalLinkIcon } from "@chakra-ui/icons"
 
-const Explanation = () => (
+const Explanation: React.FC = () => (
   <Stack spacing={3} mt={7}>
     <Text>
       This page was created in order to more easily find locations to renew your

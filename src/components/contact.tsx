@@ -19,15 +19,23 @@ import SuccessCheckmark from "./successCheckmark"
 const emailRegex =
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
-const Asterisk = () => <span css={{ color: "red" }}>*</span>
+const Asterisk = () => <span style={{ color: "red" }}>*</span>
 
-const encode = data => {
+interface FormData {
+  name: string
+  email: string
+  message: string
+  [key: string]: string
+}
+
+const encode = (data: FormData): string => {
   return Object.keys(data)
-    .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
+    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
     .join("&")
 }
 
-const timeout = ms => new Promise(resolve => setTimeout(resolve, ms))
+const timeout = (ms: number): Promise<void> =>
+  new Promise((resolve) => setTimeout(resolve, ms))
 
 const Contact = () => {
   const {
@@ -35,10 +43,11 @@ const Contact = () => {
     handleSubmit,
     formState: { errors },
     reset,
-    isLoading,
-  } = useForm()
+  } = useForm<FormData>()
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const onSubmit = async data => {
+  const [loading, setLoading] = React.useState(false)
+  const onSubmit = async (data: FormData) => {
+    setLoading(true)
     try {
       await fetch("/", {
         method: "POST",
@@ -49,6 +58,7 @@ const Contact = () => {
       onOpen()
       await timeout(2000)
       onClose()
+      setLoading(false)
     } catch (err) {
       console.error(err)
     }
@@ -70,7 +80,7 @@ const Contact = () => {
         <Stack spacing={5}>
           <Heading as="h3">Contact us</Heading>
           <input type="hidden" name="form-name" value="contact" />
-          <FormControl isInvalid={errors.name}>
+          <FormControl isInvalid={!!errors.name}>
             <FormLabel htmlFor="name">
               Name: <Asterisk />
             </FormLabel>
@@ -82,7 +92,7 @@ const Contact = () => {
               <FormErrorMessage>Name is required.</FormErrorMessage>
             )}
           </FormControl>
-          <FormControl isInvalid={errors.email}>
+          <FormControl isInvalid={!!errors.email}>
             <FormLabel htmlFor="email">
               Email: <Asterisk />
             </FormLabel>
@@ -104,7 +114,7 @@ const Contact = () => {
               <FormErrorMessage>Must be a valid email.</FormErrorMessage>
             )}
           </FormControl>
-          <FormControl isInvalid={errors.message}>
+          <FormControl isInvalid={!!errors.message}>
             <FormLabel htmlFor="message">
               Message: <Asterisk />
             </FormLabel>
@@ -134,7 +144,7 @@ const Contact = () => {
           </FormControl>
           <Box>
             <Button
-              isLoading={isLoading}
+              isLoading={loading}
               loadingText="Submitting"
               type="submit"
               colorScheme="teal"
