@@ -76,7 +76,8 @@ const Contact = () => {
         border="solid"
         p="1rem"
         borderRadius="1rem"
-        m={10}
+        my={10}
+        mx={[0, 0, 10, 10]}
       >
         <Stack spacing={5}>
           <Heading as="h3">Contact us</Heading>
