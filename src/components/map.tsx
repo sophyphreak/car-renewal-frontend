@@ -154,7 +154,6 @@ const Map = ({ houstonPosition }: houstonPositionType) => {
               <Box>
                 {city} {zip}
               </Box>
-              length
               <Box>{telephone}</Box>
               <Button
                 variant="link"
