@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react"
 import { useForm } from "react-hook-form"
 
+import getErrorMessage from "../utils/getErrorMessage"
 import SuccessCheckmark from "./successCheckmark"
 
 const emailRegex =
@@ -59,13 +60,13 @@ const Contact = () => {
       await timeout(2000)
       onClose()
       setLoading(false)
-    } catch (err) {
-      console.error(err)
+    } catch (err: unknown) {
+      console.error(getErrorMessage(err))
     }
   }
   return (
     <>
-      <SuccessCheckmark isOpen={isOpen} onClose={onClose} />
+      <SuccessCheckmark isOpen={isOpen} />
       <Box
         as="form"
         name="contact"
