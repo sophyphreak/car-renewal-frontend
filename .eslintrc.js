@@ -41,5 +41,6 @@ module.exports = {
     "no-unused-private-class-members": "off",
     "prefer-object-has-own": "off",
     "react/no-unescaped-entities": "off",
+    "testing-library/no-node-access": "off",
   },
 }
