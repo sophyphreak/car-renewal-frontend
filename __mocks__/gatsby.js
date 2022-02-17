@@ -24,4 +24,9 @@ module.exports = {
   ),
   StaticQuery: jest.fn(),
   useStaticQuery: jest.fn(),
+  navigator: {
+    geolocation: {
+      getCurrentPosition: jest.fn(),
+    },
+  },
 }

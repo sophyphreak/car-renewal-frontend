@@ -130,7 +130,8 @@ const Map = ({ houstonPosition }: houstonPositionType) => {
       .then((res) => res.json())
       .then((data) => setLocations(data))
       .catch((err) => console.error(err))
-    navigator.geolocation.getCurrentPosition(success)
+    global.navigator.geolocation.getCurrentPosition(success)
+    return () => setLocations([]) // prevents memory leak
     // silenced because adding `success` causes infinite re-renders
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
