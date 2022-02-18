@@ -15,7 +15,7 @@ import {
 import { useForm } from "react-hook-form"
 
 import getErrorMessage from "../utils/getErrorMessage"
-import SuccessCheckmark from "./successCheckmark"
+import SuccessCheckmark from "./success-checkmark"
 
 const emailRegex =
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
