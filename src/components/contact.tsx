@@ -48,13 +48,19 @@ const Contact = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [loading, setLoading] = React.useState(false)
   const onSubmit = async (data: FormData) => {
+    // console.log(data)
     setLoading(true)
     try {
-      await fetch("/", {
+      const response = await fetch("/", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: encode({ "form-name": "contact", ...data }),
       })
+      if (!response.ok) {
+        setLoading(false)
+        throw new Error(`HTTP request failed with status ${response.status}`)
+      }
+      console.log(response.json())
       reset()
       onOpen()
       await timeout(2000)
@@ -83,7 +89,7 @@ const Contact = () => {
           <Heading as="h3">Contact us</Heading>
           <input type="hidden" name="form-name" value="contact" />
           <FormControl isInvalid={!!errors.name}>
-            <FormLabel htmlFor="name">
+            <FormLabel>
               Name: <Asterisk />
             </FormLabel>
             <Input {...register("name", { required: true })} />
@@ -95,7 +101,7 @@ const Contact = () => {
             )}
           </FormControl>
           <FormControl isInvalid={!!errors.email}>
-            <FormLabel htmlFor="email">
+            <FormLabel>
               Email: <Asterisk />
             </FormLabel>
             <Input
@@ -117,7 +123,7 @@ const Contact = () => {
             )}
           </FormControl>
           <FormControl isInvalid={!!errors.message}>
-            <FormLabel htmlFor="message">
+            <FormLabel>
               Message: <Asterisk />
             </FormLabel>
             <Textarea

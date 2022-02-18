@@ -4,11 +4,23 @@ import { MapContainer } from "react-leaflet"
 import { render as rtlRender, waitFor, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { setupServer } from "msw/node"
-import { handlers } from "../../../test/server-handlers"
 import Map from "../map"
 import houstonPosition from "../fixtures/houstonPosition"
 import "whatwg-fetch"
 import "@testing-library/jest-dom"
+import { rest } from "msw"
+import locations from "../fixtures/locations"
+
+const delay = process.env.NODE_ENV === "test" ? 0 : 1500
+
+const handlers = [
+  rest.get(
+    "https://car-renewal.andrew-horn-portfolio.life/api/v1/renewal-locations",
+    async (_, res, ctx) => {
+      return res(ctx.delay(delay), ctx.json(locations))
+    }
+  ),
+]
 
 const [houstonLatitude, houstonLongitude] = houstonPosition
 
