@@ -21,7 +21,9 @@ const SuccessCheckmark = ({ isOpen }: SuccessCheckmarkProps) => {
     >
       <AlertDialogOverlay />
       <AlertDialogContent width="6rem" height="6rem" borderRadius="50%">
-        <Checkmark size="xxLarge" />
+        <span aria-label="success">
+          <Checkmark size="xxLarge" />
+        </span>
       </AlertDialogContent>
     </AlertDialog>
   )

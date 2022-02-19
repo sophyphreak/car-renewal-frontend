@@ -14,11 +14,10 @@ import {
 } from "@chakra-ui/react"
 import { useForm } from "react-hook-form"
 
-import getErrorMessage from "../utils/getErrorMessage"
-import SuccessCheckmark from "./success-checkmark"
-
-const emailRegex =
-  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+import getErrorMessage from "../../utils/getErrorMessage"
+import SuccessCheckmark from "../success-checkmark"
+import { postContact } from "./postContact"
+import { emailRegex, timeout } from "./utils"
 
 const Asterisk = () => <span style={{ color: "red" }}>*</span>
 
@@ -28,15 +27,6 @@ interface FormData {
   message: string
   [key: string]: string
 }
-
-const encode = (data: FormData): string => {
-  return Object.keys(data)
-    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
-    .join("&")
-}
-
-const timeout = (ms: number): Promise<void> =>
-  new Promise((resolve) => setTimeout(resolve, ms))
 
 const Contact = () => {
   const {
@@ -48,19 +38,13 @@ const Contact = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [loading, setLoading] = React.useState(false)
   const onSubmit = async (data: FormData) => {
-    // console.log(data)
     setLoading(true)
     try {
-      const response = await fetch("/", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: encode({ "form-name": "contact", ...data }),
-      })
+      const response = await postContact(data)
       if (!response.ok) {
         setLoading(false)
         throw new Error(`HTTP request failed with status ${response.status}`)
       }
-      console.log(response.json())
       reset()
       onOpen()
       await timeout(2000)

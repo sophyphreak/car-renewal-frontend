@@ -1,7 +1,7 @@
 /* eslint-disable testing-library/no-container */
 import * as React from "react"
 import { MapContainer } from "react-leaflet"
-import { render as rtlRender, waitFor, screen } from "@testing-library/react"
+import { render as rtlRender, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { setupServer } from "msw/node"
 import Map from "../map"
@@ -93,14 +93,16 @@ test("renders when location outside Houston is shared", () => {
 
 test("user can correctly interact with markers", async () => {
   mockGetCurrentPosition()
-  const { container } = render(<Map houstonPosition={houstonPosition} />)
-  await waitFor(() => {
-    expect(
-      container.getElementsByClassName("leaflet-marker-icon").length
-    ).toBeGreaterThan(1)
-  })
-  const markers = container.getElementsByClassName("leaflet-marker-icon")
-  userEvent.click(markers[0])
+  render(<Map houstonPosition={houstonPosition} />)
+  expect(
+    await screen.findByRole("img", {
+      name: /randalls #1773/i,
+    })
+  ).toBeInTheDocument()
+
+  userEvent.click(screen.getByRole("img", { name: /randalls #1773/i }))
+
+  expect(await screen.findByText(/randalls #1773/i)).toBeInTheDocument()
   expect(screen.getByText(/randalls #1773/i)).toBeInTheDocument()
   expect(screen.getByText(/2225 louisiana/i)).toBeInTheDocument()
   expect(screen.getByText(/houston/i)).toBeInTheDocument()
