@@ -3,3 +3,5 @@ export const emailRegex =
 
 export const timeout = (ms: number): Promise<void> =>
   new Promise((resolve) => setTimeout(resolve, ms))
+
+export const delay = process.env.NODE_ENV === "test" ? 0 : 2000

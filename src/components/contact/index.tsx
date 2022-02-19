@@ -1,5 +1,9 @@
 import React from "react"
 import {
+  Alert,
+  AlertTitle,
+  AlertDescription,
+  CloseButton,
   FormControl,
   FormLabel,
   FormErrorMessage,
@@ -17,7 +21,7 @@ import { useForm } from "react-hook-form"
 import getErrorMessage from "../../utils/getErrorMessage"
 import SuccessCheckmark from "../success-checkmark"
 import { postContact } from "./postContact"
-import { emailRegex, timeout } from "./utils"
+import { emailRegex, timeout, delay } from "./utils"
 
 const Asterisk = () => <span style={{ color: "red" }}>*</span>
 
@@ -37,17 +41,21 @@ const Contact = () => {
   } = useForm<FormData>()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [loading, setLoading] = React.useState(false)
+  const [isServerError, setIsServerError] = React.useState(false)
   const onSubmit = async (data: FormData) => {
     setLoading(true)
     try {
       const response = await postContact(data)
+
       if (!response.ok) {
         setLoading(false)
+        setIsServerError(true)
         throw new Error(`HTTP request failed with status ${response.status}`)
       }
+
       reset()
       onOpen()
-      await timeout(2000)
+      await timeout(delay)
       onClose()
       setLoading(false)
     } catch (err: unknown) {
@@ -135,6 +143,15 @@ const Contact = () => {
             )}
           </FormControl>
           <Box>
+            {isServerError && (
+              <Alert status="error" mb={4}>
+                <AlertTitle mr={2}>Server error occurred!</AlertTitle>
+                <AlertDescription>
+                  Your message was not recieved. Please try again later
+                </AlertDescription>
+                <CloseButton position="absolute" right="8px" top="8px" />
+              </Alert>
+            )}
             <Button
               isLoading={loading}
               loadingText="Submitting"

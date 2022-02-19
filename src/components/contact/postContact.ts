@@ -8,10 +8,9 @@ const encode = (data: ObjectProps) => {
     .join("&")
 }
 
-export const postContact = (data: ObjectProps) => {
-  return fetch("/", {
+export const postContact = (data: ObjectProps) =>
+  fetch("/", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: encode({ "form-name": "contact", ...data }),
   })
-}
