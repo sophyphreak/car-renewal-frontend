@@ -4,6 +4,7 @@ module.exports = {
     "eslint-config-kentcdodds/jest",
     "eslint-config-kentcdodds/jsx-a11y",
     "eslint-config-kentcdodds/react",
+    "plugin:cypress/recommended",
   ],
   parserOptions: {
     ecmaVersion: 2021,
